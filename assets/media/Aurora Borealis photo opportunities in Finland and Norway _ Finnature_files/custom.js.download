@@ -1,0 +1,152 @@
+(function($) {
+    /* Carousel stuff */
+
+    $('.owl-carousel').owlCarousel({
+        loop: true,
+        margin: 0,
+        nav: false,
+        dots: true,
+        items: 1,
+        autoplay: false,
+        autoplayTimeout: 8000,
+        nav: true,
+        // navContainer: '.carousel-nav-container',
+        // dotsContainer: '.carousel-nav-container'
+    })
+
+    $('.popup-link').magnificPopup({
+        type: 'image'
+    });
+
+    /* Auto hide navbar on scroll down */
+
+    /*
+
+    var lastScrollTop = 0;
+    var $navbar = $('.navbar');
+    var navbarHeight = $navbar.outerHeight() + parseInt($('.navbar').css('top'));
+    var movement = 0;
+    var lastDirection = 0;
+
+    $(window).scroll(function(event) {
+        var st = $(this).scrollTop();
+        movement += st - lastScrollTop;
+
+        if (st > lastScrollTop) { // scroll down
+            if (lastDirection != 1) {
+                movement = 0;
+            }
+            var margin = Math.abs(movement);
+            if (margin > navbarHeight) {
+                margin = navbarHeight;
+            }
+            margin = -margin;
+            $navbar.css('margin-top', margin + "px")
+
+            lastDirection = 1;
+        } else { // scroll up
+
+            if (lastDirection != -1) {
+                // movement = 0;
+                movement = -navbarHeight - parseInt($navbar.css('margin-top'));
+            }
+            var margin = Math.abs(movement);
+            if (margin > navbarHeight) {
+                margin = navbarHeight;
+            }
+            margin = margin - navbarHeight;
+            $navbar.css('margin-top', margin + "px")
+
+            lastDirection = -1;
+        }
+
+        lastScrollTop = st;
+    });
+
+    */
+
+    var headroom = new Headroom(document.querySelector(".navbar"), {
+        offset: 80,
+        tolerance: {
+            up: 5,
+            down: 0
+        }
+    });
+    headroom.init();
+
+    /* Close full page nav on esc key */
+
+    $(document).keydown(function(event) {
+        if (event.which == 27) {
+            document.getElementById("full-screen-nav").style.height = "0%";
+        }
+    });
+
+    /* Floating label on gravity forms */
+    $('li.gfield .ginput_container > *').focus(function(event) {
+        $(this).closest('li').addClass('floating-label-active');
+    });
+
+    $('li.gfield .ginput_container > *').blur(function(event) {
+        if ($(this).val() == '') {
+            $(this).closest('li').removeClass('floating-label-active');
+        }
+    });
+
+    /* Prevent mobile menu submenu hide on chevron click */
+    $('.dropdown-menu a.dropdown-toggle').on('click', function(e) {
+
+        var $dropdownToggle = $(this);
+
+        if (!$(this).next().hasClass('show')) {
+            $(this).parents('.dropdown-menu').first().find('.show').removeClass("show");
+            $dropdownToggle.attr("aria-expanded", "true");
+        } else {
+            $dropdownToggle.attr("aria-expanded", "false")
+        }
+
+        var $subMenu = $(this).next(".dropdown-menu");
+        $subMenu.toggleClass('show');
+
+        $(this).parents('li.nav-item.dropdown.show').on('hidden.bs.dropdown', function(e) {
+            $('.dropdown-submenu .show').removeClass("show");
+        });
+
+        return false;
+    });
+
+    /* Fix menu margin for content-area */
+
+    var menuHeight = $('#wrapper-navbar nav.navbar').first().innerHeight();
+    $('.content-area').css('margin-top', menuHeight + 'px');
+    $(window).resize(function() {
+        // Change margin on window resize also
+        var menuHeight = $('#wrapper-navbar nav.navbar').first().innerHeight();
+        $('.content-area').css('margin-top', menuHeight + 'px');
+    })
+
+    /* Accordion */
+    $('.question-label').on('click', function(e) {
+        if ($(e.target).hasClass('open')) {
+            $(e.target).next().animate({ height: 0 }, 300);
+            $(e.target).removeClass('open');
+        } else {
+            $(e.target).parent().find('.question-label').removeClass('open');
+            $(e.target).addClass('open');
+            $(e.target).parent().find('.question-label:not(.open)').next().animate({ height: 0 }, 300);
+            var answerHeight = $(e.target).next().find('.answer-text').innerHeight();
+            $(e.target).next().animate({ height: answerHeight }, 300);
+        }
+    })
+
+})(jQuery);
+
+function openNav() {
+    document.getElementById("full-screen-nav").style.height = "100%";
+}
+
+
+
+function closeNav() {
+    document.getElementById("full-screen-nav").style.height = "0%";
+}

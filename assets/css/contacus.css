@@ -1,0 +1,53 @@
+#foot
+{
+    background: url("../media/Aurora-borealis_-1920660.jpg");
+    background-repeat: no-repeat;
+}
+#img1
+{
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+    margin-top:20px;
+}
+#flexcontainer
+{
+    display: flex;
+
+}
+
+
+.footbtn
+{
+    height: 12px;
+    width: 12px;
+    border: solid white;
+    border-width: 1px;
+    border-radius: 50%;
+}
+.footbtn:hover
+{
+
+    border-color:rgb(29, 85, 240);
+}
+.flexcontainer
+{
+    display:flex;
+    margin-left: 0px;
+}
+.footdiv2
+{
+    display: inline;
+    width: 20%;
+}
+.footdiv2btn
+{
+    width: 19%;
+    margin:1px;
+    border-style: none;
+}
+.img2
+{
+    height:40px;
+    width:60px;
+}
